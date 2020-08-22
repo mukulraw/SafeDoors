@@ -20,7 +20,7 @@ public class DoctInfoFragment extends Fragment {
     RecyclerView recyclerView;
     GridLayoutManager manager;
     DoctAdapter adapter;
-    List<> list;
+    List<String> list;
 
 
     @Nullable
