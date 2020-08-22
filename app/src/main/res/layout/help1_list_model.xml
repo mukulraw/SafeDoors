@@ -3,40 +3,43 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:background="@drawable/cdcdcd_white_stroke">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+      >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginStart="7dp"
-            android:layout_marginEnd="7dp"
-            android:background="#ffffff">
-
-
+            android:weightSum="4"
+            >
 
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
+                android:layout_weight="2"
+                android:layout_marginTop="5dp"
                 >
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/images"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginEnd="18dp"
+                    android:id="@+id/image"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+
                     />
 
                 <TextView
@@ -44,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="H.No.102"
+                    android:id="@+id/id"
                     android:layout_gravity="center_vertical"/>
 
 
@@ -54,20 +58,38 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_weight="1"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="20dp">
 
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="end"
-                    android:text="#1 23/8/2017"
+                    android:id="@+id/timer"
+                    android:text="           12:00"
                     />
-
-
-
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:layout_marginTop="20dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:id="@+id/date"
+                    android:text="       #1 23/8/2017"
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
 
 
         </LinearLayout>
@@ -77,18 +99,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ffffff"
-           android:layout_gravity="center_horizontal"
-            android:gravity="center"
+            android:layout_marginStart="60dp"
             android:textColor="#000"
+            android:padding="2dp"
+            android:id="@+id/lorem"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
             android:text="Lorem Ipsum is simply"
             />
-
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#acabab"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="5dp"/>
 </LinearLayout>
+
+</LinearLayout>
+
+
+
+
+

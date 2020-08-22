@@ -14,7 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="vertical"
-        android:background="@drawable/doorrr">
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/back"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,11 +29,11 @@
 
 
 
-        <com.tbx.fitness.graphy.RoundedImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ladka"
+            android:id="@+id/pro"
             android:layout_marginTop="30dp"
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
@@ -38,9 +43,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
+            android:id="@+id/name"
             android:layout_marginTop="5dp"
             android:textSize="20sp"
             android:textColor="#ffffff"
@@ -49,8 +54,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Flat No.205"
                 android:padding="2dp"
+                android:id="@+id/house"
                 android:layout_marginStart="18dp"
                 android:layout_marginEnd="18dp"
                 android:textColor="#ffffff"/>
@@ -97,7 +102,7 @@
         android:text="Help"/>
 -->
 
-    <TextView
+   <!-- <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -106,7 +111,7 @@
         android:drawableStart="@drawable/meeting"
         android:text="Meeting Arrangement"/>
 
-
+-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,8 +122,19 @@
         android:text="Facility"/>
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:id="@+id/booking"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/facility"
+            android:text="My Bookings"/>
 
-    <TextView
+
+
+
+        <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"

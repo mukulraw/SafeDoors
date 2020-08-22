@@ -7,6 +7,5 @@
         android:id="@+id/notification"
         android:title="notification"
         app:showAsAction="always"
-
         />
 </menu>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:background="@drawable/cdcdcd_white_stroke">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ticket"
+        android:text="Ticket Number"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:textSize="24sp"
+        android:textColor="@color/colorAccent"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date"
+                android:text="Date"
+                android:padding="10dp"
+                android:layout_alignParentEnd="true"
+                android:textSize="18sp"
+                android:drawablePadding="10dp"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:drawableStart="@drawable/calender"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        android:padding="5dp"
+        android:textSize="18sp"
+        android:text="Event Name"/>
+
+
+   <!-- <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/des"
+        android:padding="5dp"
+        android:textSize="18sp"
+        android:text="Description"/>
+
+-->
+   <!-- <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time"
+        android:padding="5dp"
+        android:textSize="18sp"
+        android:text="Time"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="end"
+        android:gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:layout_marginEnd="10dp"
+        android:drawableStart="@drawable/clo"/>-->
+
+    </LinearLayout>
+
+</LinearLayout>

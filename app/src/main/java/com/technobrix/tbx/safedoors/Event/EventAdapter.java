@@ -1,18 +1,31 @@
 package com.technobrix.tbx.safedoors.Event;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import android.content.Intent;
+
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.technobrix.tbx.safedoors.AllApiInterface;
+import com.technobrix.tbx.safedoors.BuyTicket;
+import com.technobrix.tbx.safedoors.EventBookPOJO.EventBookBean;
 import com.technobrix.tbx.safedoors.EventDatePOJO.MeetingList;
-import com.technobrix.tbx.safedoors.MeetingArragemenmt.Meeting;
 import com.technobrix.tbx.safedoors.R;
+import com.technobrix.tbx.safedoors.bean;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
@@ -39,7 +52,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
 
-        MeetingList item = list.get(position);
+        final MeetingList item = list.get(position);
 
         String daa = item.getMeetingDate();
         String[] d1 = daa.split("-");
@@ -50,6 +63,48 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
        holder. title.setText(item.getTitle());
        holder.desc.setText(item.getDescription());
 
+
+
+
+
+
+       holder.buyticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                bean b = (bean)context.getApplicationContext();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://safedoors.in")
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                AllApiInterface cr = retrofit.create(AllApiInterface.class);
+
+                Call<EventBookBean> call = cr.eventbook(b.socity_id , b.house_id , b.userId , item.getId() , item.getEventPrice());
+
+                call.enqueue(new Callback<EventBookBean>() {
+                    @Override
+                    public void onResponse(Call<EventBookBean> call, Response<EventBookBean> response) {
+
+                       Intent i = new Intent(context , BuyTicket.class);
+
+                       i.putExtra("title" , item.getTitle());
+                       context.startActivity(i);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<EventBookBean> call, Throwable t) {
+
+                    }
+                });
+
+
+            }
+        });
 
     }
 
@@ -68,13 +123,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
 
         TextView d , m , title , desc;
 
+        Button paid , buyticket;
+
         public MyViewHolder(View itemView) {
             super(itemView);
 
             d = (TextView)itemView.findViewById(R.id.day);
             m = (TextView)itemView.findViewById(R.id.month);
             title = (TextView)itemView.findViewById(R.id.title);
-            desc = (TextView)itemView.findViewById(R.id.desc);
+            desc = (TextView)itemView.findViewById(R.id.description);
+
+            paid = (Button)itemView.findViewById(R.id.paid);
+            buyticket = (Button)itemView.findViewById(R.id.butticket);
 
         }
     }

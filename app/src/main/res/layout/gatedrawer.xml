@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:visibility="gone"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:layout_alignParentBottom="true"
+                android:padding="15dp"
+                android:id="@+id/name"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                />
+
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/home"
+        android:visibility="gone"
+        android:text="Home"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/notifications"
+        android:drawableStart="@drawable/notify2"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:text="Notifications"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/logout"
+        android:gravity="center_vertical"
+        android:drawableStart="@drawable/logout"
+        android:drawablePadding="10dp"
+        android:text="Logout"/>
+
+
+
+</LinearLayout>

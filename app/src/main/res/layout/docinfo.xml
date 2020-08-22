@@ -26,66 +26,15 @@
             android:layout_marginBottom="10dp"/>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textColor="#000"
-            android:padding="5dp"
-            android:textSize="10sp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="Aadhar Card*"/>
 
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/recycler"
+    android:paddingBottom="60dp"
+    >
 
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:paddingStart="18dp"
-                    android:background="@drawable/cdcdcd_white_stroke"
-                    android:drawableStart="@drawable/uparrow"
-                    android:drawablePadding="5dp"
-                    android:text="5623 1524 7845"/>
-
-
-
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:textSize="10sp"
-            android:padding="5dp"
-            android:textColor="#000"
-            android:paddingStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:paddingEnd="10dp"
-            android:text="Home Doc*"/>
-
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/cdcdcd_white_stroke"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    />
+</androidx.recyclerview.widget.RecyclerView>
 
 
 
@@ -93,10 +42,24 @@
 
     </LinearLayout>
 
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Add Document"
+    android:layout_alignParentBottom="true"
+    android:padding="18dp"
+    android:id="@+id/add"
+    android:background="@color/colorAccent"
+    android:gravity="center"
+    android:textColor="#ffffff"/>
 
 
-
-
+<ProgressBar
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/progress"
+    android:layout_centerInParent="true"
+    android:visibility="gone"/>
 
 
 </RelativeLayout>

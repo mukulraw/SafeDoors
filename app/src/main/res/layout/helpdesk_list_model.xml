@@ -5,20 +5,28 @@
     android:id="@+id/linearlayout"
     >
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp">
+       android:layout_margin="5dp"
+        android:background="@drawable/cdcdcd_white_stroke">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2"
+        android:weightSum="4"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:background="#ffffff">
+        >
 
 
 
@@ -27,32 +35,36 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
 
             <ImageView
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:src="@drawable/images"
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="18dp"
+                android:id="@+id/image"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="H.No.102"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:text="UserName"
+                android:id="@+id/user"
+                android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_marginTop="7dp">
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:gravity="end"
+           >
 
 
         <TextView
@@ -66,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:id="@+id/comment"
                 android:text="1.1k"/>
 
             <TextView
@@ -89,6 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1.1k"
+                android:id="@+id/view"
                 android:layout_marginTop="5dp"/>
 
 
@@ -102,11 +116,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="#cdcdcd"/>
 
-
-
             </LinearLayout>
-
-
     </LinearLayout>
 
 
@@ -118,7 +128,7 @@
         android:layout_marginEnd="10dp"
         android:paddingStart="18dp"
         android:paddingEnd="18dp"
-        android:padding="5dp"
+        android:id="@+id/subject"
         android:textStyle="bold"
         android:text="Lorem Ipsum is simply dummy text of the"
         />
@@ -132,9 +142,12 @@
         android:layout_marginEnd="10dp"
         android:paddingStart="18dp"
         android:paddingEnd="18dp"
-        android:padding="2dp"
+        android:layout_marginBottom="7dp"
+        android:id="@+id/body"
         android:text="Lorem Ipsum is simply dummy text of the"
         />
+    </LinearLayout>
+
     </LinearLayout>
     </LinearLayout>
 

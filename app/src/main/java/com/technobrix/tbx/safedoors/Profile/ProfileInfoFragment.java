@@ -2,8 +2,8 @@ package com.technobrix.tbx.safedoors.Profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +25,11 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ProfileInfoFragment extends Fragment {
 
-    TextView email , dob , fn, pa, male, edit;
+    TextView email , dob , flat, pa, male, edit , society , age , phone , name;
 
     ProgressBar bar;
+
+
 
     @Nullable
     @Override
@@ -37,10 +39,14 @@ public class ProfileInfoFragment extends Fragment {
 
         email = (TextView)view.findViewById(R.id.email);
         dob = (TextView)view.findViewById(R.id.dob);
-        fn = (TextView)view.findViewById(R.id.fn);
-        pa = (TextView)view.findViewById(R.id.pa);
+        flat = (TextView)view.findViewById(R.id.flat);
+        pa = (TextView)view.findViewById(R.id.address);
         male = (TextView)view.findViewById(R.id.male);
         edit = (TextView)view.findViewById(R.id.edit);
+        society = (TextView)view.findViewById(R.id.society);
+        age = (TextView)view.findViewById(R.id.age);
+        phone = (TextView)view.findViewById(R.id.phone);
+       // name = (TextView)view.findViewById(R.id.name);
         bar = (ProgressBar) view.findViewById(R.id.progress);
 
         edit.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +83,11 @@ public class ProfileInfoFragment extends Fragment {
                 dob.setText(response.body().getDob());
                 pa.setText(response.body().getPermanentAddress());
                 male.setText(response.body().getGender());
-
-                Log.d("hmm" , "response");
+                phone.setText(response.body().getPhone());
+                flat.setText(response.body().getFlatNo());
+                society.setText(response.body().getSocityName());
+                email.setText(response.body().getEmail());
+                age.setText(response.body().getAge());
 
                 bar.setVisibility(View.GONE);
 

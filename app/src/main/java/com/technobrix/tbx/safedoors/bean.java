@@ -19,6 +19,10 @@ public class bean extends Application {
     public String socity_id = "";
     public String image = "";
     public String flat = "";
+    public String member_id = "";
+    public String topic_id = "";
+    public String vehicl_id = "";
+    public String family_id = "";
 
 
 }

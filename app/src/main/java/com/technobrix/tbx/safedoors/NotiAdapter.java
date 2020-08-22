@@ -1,16 +1,18 @@
 package com.technobrix.tbx.safedoors;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.technobrix.tbx.safedoors.GetNotificationPOJO.NotificationList;
+
+import com.technobrix.tbx.safedoors.NotificationListPOJO.NotificationList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.MyViewHolder> {
@@ -34,8 +36,42 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(NotiAdapter.MyViewHolder holder, int position) {
 
-        NotificationList noti = list.get(position);
-        holder.name.setText(noti.getMeetingPurpose());
+        NotificationList item = list.get(position);
+
+        if (Objects.equals(item.getNotifyData().getVisitorType(), "Regular"))
+        {
+            holder.name.setText(item.getNotifyData().getStaffName());
+
+            if (Objects.equals(item.getType(), "visitor_out"))
+            {
+                holder.status.setText("Left");
+            }
+            else if (Objects.equals(item.getType(), "visitor_entry"))
+            {
+                holder.status.setText("Entered");
+            }
+
+        }
+        else if (Objects.equals(item.getNotifyData().getVisitorType(), "New"))
+        {
+            holder.name.setText(item.getNotifyData().getVisitorName());
+
+            if (Objects.equals(item.getType(), "visitor_out"))
+            {
+                holder.status.setText("Left");
+            }
+            else if (Objects.equals(item.getType(), "visitor_entry"))
+            {
+                holder.status.setText("Entered");
+            }
+        }
+
+
+
+        holder.comment.setText(item.getNotifyData().getComment());
+        holder.intime.setText(item.getNotifyData().getIntime());
+        holder.outtime.setText(item.getNotifyData().getOuttime());
+
 
     }
 
@@ -52,12 +88,16 @@ public class NotiAdapter extends RecyclerView.Adapter<NotiAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name;
+        TextView name , intime , outtime , status , comment;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             name = (TextView)itemView.findViewById(R.id.name);
+            outtime = (TextView)itemView.findViewById(R.id.out);
+            intime = (TextView)itemView.findViewById(R.id.in);
+            status = (TextView)itemView.findViewById(R.id.status);
+            comment= (TextView)itemView.findViewById(R.id.comment);
         }
     }
 }

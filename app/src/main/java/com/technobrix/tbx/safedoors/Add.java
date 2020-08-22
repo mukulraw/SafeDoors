@@ -1,7 +1,9 @@
 package com.technobrix.tbx.safedoors;
 
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,9 +11,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.technobrix.tbx.safedoors.AddFamilyPOJO.AddFamilyBean;
-import com.technobrix.tbx.safedoors.FamilyPOJO.FamilyBean;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,11 +21,13 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Add extends AppCompatActivity {
 
-    EditText name , age , gender , relation , user;
+    EditText name , age , gender , relation , user , pass;
 
     Button submit;
 
     ProgressBar bar;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,29 @@ public class Add extends AppCompatActivity {
         relation = (EditText) findViewById(R.id.relation);
 
         user = (EditText) findViewById(R.id.user);
+
+        pass = (EditText) findViewById(R.id.pass);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.arrow);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+
+            }
+
+        });
+
+
+        toolbar.setTitle("Member");
 
         submit = (Button) findViewById(R.id.submit);
 

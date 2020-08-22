@@ -2,10 +2,10 @@ package com.technobrix.tbx.safedoors.Profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.technobrix.tbx.safedoors.AddVehicle;
 import com.technobrix.tbx.safedoors.AllApiInterface;
-import com.technobrix.tbx.safedoors.GetFamilyPOJO.GetFamilyBean;
 import com.technobrix.tbx.safedoors.GetVehiclePOJO.VehicleBean;
 import com.technobrix.tbx.safedoors.GetVehiclePOJO.VehicleList;
 import com.technobrix.tbx.safedoors.R;

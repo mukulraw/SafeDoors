@@ -4,8 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +18,10 @@ import android.widget.Toast;
 
 import com.technobrix.tbx.safedoors.AllApiInterface;
 import com.technobrix.tbx.safedoors.ForgotPOJO.ForgotBean;
-import com.technobrix.tbx.safedoors.GateKeeper;
 import com.technobrix.tbx.safedoors.LoginPOJO.LoginBean;
 import com.technobrix.tbx.safedoors.MainActivity;
+import com.technobrix.tbx.safedoors.NewGatekeeper.GateHome;
 import com.technobrix.tbx.safedoors.R;
-import com.technobrix.tbx.safedoors.RegisterPOJO.RegisterBean;
 import com.technobrix.tbx.safedoors.bean;
 
 import java.util.Objects;
@@ -180,11 +179,15 @@ public class Login extends AppCompatActivity {
 
                                         b.userId = response.body().getUserid();
 
-                                        b.name = response.body().getSocityName();
+                                        b.name = response.body().getUsername();
 
                                         b.socity = response.body().getSocityId();
 
-                                        b.house_id = response.body().getHouseNo();
+                                        b.flat = response.body().getHouseNo();
+
+                                        b.house_id = response.body().getHouseId();
+
+                                        b.member_id = response.body().getUserid();
 
                                         edit.putString("email" , e);
                                         edit.putString("pass" , u);
@@ -202,10 +205,17 @@ public class Login extends AppCompatActivity {
                                     {
                                         bean b = (bean)getApplicationContext();
                                         b.userId = response.body().getUserid();
-                                        b.name = response.body().getSocityName();
+                                        b.name = response.body().getUsername();
+                                        b.flat = response.body().getHouseNo();
                                         b.socity = response.body().getSocityId();
+
+                                        edit.putString("email" , e);
+                                        edit.putString("pass" , u);
+                                        edit.apply();
+
+
                                         Toast.makeText(Login.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(Login.this, GateKeeper.class);
+                                        Intent i = new Intent(Login.this, GateHome.class);
                                         bar3.setVisibility(View.GONE);
                                         startActivity(i);
                                         finish();
@@ -228,6 +238,7 @@ public class Login extends AppCompatActivity {
                             public void onFailure(Call<LoginBean> call, Throwable t) {
                                 bar3.setVisibility(View.GONE);
 
+                                Log.d("dfhnld" ,t.toString());
 
                             }
                         });

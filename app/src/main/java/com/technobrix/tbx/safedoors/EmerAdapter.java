@@ -1,7 +1,9 @@
 package com.technobrix.tbx.safedoors;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import android.content.Intent;
+import android.net.Uri;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +24,6 @@ public class EmerAdapter extends RecyclerView.Adapter<EmerAdapter.MyViewHolder> 
 
     public EmerAdapter(Context context , List<EmerBean> list){
 
-
-
         this.list = list;
         this.context = context;
     }
@@ -38,12 +38,24 @@ public class EmerAdapter extends RecyclerView.Adapter<EmerAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        EmerBean item = list.get(position);
+        final EmerBean item = list.get(position);
 
-        holder.name.setText(item.getNumber());
-        holder.num.setText(item.getTitle());
+        holder.name.setText(item.getTitle());
+        holder.num.setText(item.getNumber());
+
+        holder.num.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //String number = "494498498";
+                 Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:0123456789"));
+                context.startActivity(intent);
 
 
+
+            }
+        });
 
 
     }

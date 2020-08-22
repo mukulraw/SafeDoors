@@ -36,7 +36,7 @@
                 android:textSize="25sp"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="12dp"
                 />
 
             <TextView
@@ -67,6 +67,7 @@
                 android:text="Amount Rs.2000"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+                android:layout_weight="1"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"

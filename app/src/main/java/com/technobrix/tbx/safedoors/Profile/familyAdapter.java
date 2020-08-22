@@ -1,13 +1,13 @@
 package com.technobrix.tbx.safedoors.Profile;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.technobrix.tbx.safedoors.FacilityPOJO.FacilityList;
 
 import com.technobrix.tbx.safedoors.GetFamilyPOJO.FamiltList;
 import com.technobrix.tbx.safedoors.R;
@@ -37,12 +37,31 @@ public class familyAdapter extends RecyclerView.Adapter<familyAdapter.myviewhold
     public void onBindViewHolder(familyAdapter.myviewholder holder, int position) {
 
 
-        FamiltList item = list.get(position);
+        final FamiltList item = list.get(position);
         holder.name.setText(item.getName());
         holder.age.setText(item.getAge());
         holder.male.setText(item.getGender());
         holder.son.setText(item.getRelation());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                  /*  Intent i = new Intent(context , ViewFamilyInfo.class);
+                    context.startActivity(i);
+*/
+
+                Intent i = new Intent(context, ViewFamilyInfo.class);
+                Bundle b = new Bundle();
+                b.putString("name", item.getName());
+                b.putString("age", item.getAge());
+                b.putString("male", item.getGender());
+                b.putString("son", item.getRelation());
+                i.putExtras(b);
+                context. startActivity(i);
+
+            }
+        });
 
     }
 
@@ -61,6 +80,8 @@ public class familyAdapter extends RecyclerView.Adapter<familyAdapter.myviewhold
 
         TextView name , age , male , son;
 
+       // ImageButton remove;
+
 
         public myviewholder(View itemView) {
             super(itemView);
@@ -69,6 +90,9 @@ public class familyAdapter extends RecyclerView.Adapter<familyAdapter.myviewhold
             age = (TextView)itemView.findViewById(R.id.age);
             male = (TextView)itemView.findViewById(R.id.gender);
             son = (TextView)itemView.findViewById(R.id.relation);
+           // remove = (ImageButton) itemView.findViewById(R.id.close);
+
+
 
 
 

@@ -15,12 +15,19 @@
         android:orientation="vertical"
         >
 
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            android:background="@color/colorAccent"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/cdcdcd_white_stroke"
         android:padding="10dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="5dp"
         android:layout_marginStart="18dp"
@@ -91,6 +98,21 @@
 
 
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cdcdcd_white_stroke"
+            android:padding="10dp"
+            android:paddingStart="18dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="18dp"
+            android:hint="Password"
+            android:id="@+id/pass"
+            android:textColorHint="#cecccc"/>
+
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,7 +120,7 @@
             android:background="@drawable/red_round"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="60dp"
             android:text="SUBMIT"
             android:textSize="20sp"
             android:textColor="#fff"/>

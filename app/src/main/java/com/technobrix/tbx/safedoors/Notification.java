@@ -1,18 +1,18 @@
 package com.technobrix.tbx.safedoors;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
 
-import com.technobrix.tbx.safedoors.GetNotificationPOJO.NotificationBean;
-import com.technobrix.tbx.safedoors.GetNotificationPOJO.NotificationList;
-import com.technobrix.tbx.safedoors.ProfilePOJO.SetFamilyBean;
+
+import com.technobrix.tbx.safedoors.NotificationListPOJO.NotifiBean;
+import com.technobrix.tbx.safedoors.NotificationListPOJO.NotificationList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,22 +26,28 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Notification extends AppCompatActivity  {
 
-
     RecyclerView recyclerView;
+
     GridLayoutManager manager;
+
     NotiAdapter adapter;
+
     List<NotificationList> list;
+
     ProgressBar bar;
+
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -76,11 +82,11 @@ public class Notification extends AppCompatActivity  {
         bean b = (bean)getApplicationContext();
 
         AllApiInterface cr = retrofit.create(AllApiInterface.class);
-        Call<NotificationBean> call = cr.notify("1", "1" );
+        Call<NotifiBean> call = cr.notify("1", "1" );
 
-        call.enqueue(new Callback<NotificationBean>() {
+        call.enqueue(new Callback<NotifiBean>() {
             @Override
-            public void onResponse(Call<NotificationBean> call, Response<NotificationBean> response) {
+            public void onResponse(Call<NotifiBean> call, Response<NotifiBean> response) {
 
                 adapter.Setgrid(response.body().getNotificationList());
 
@@ -89,13 +95,12 @@ public class Notification extends AppCompatActivity  {
             }
 
             @Override
-            public void onFailure(Call<NotificationBean> call, Throwable t) {
+            public void onFailure(Call<NotifiBean> call, Throwable t) {
 
                 bar.setVisibility(View.GONE);
 
             }
         });
-
 
     }
 

@@ -2,19 +2,17 @@ package com.technobrix.tbx.safedoors.MeetingArragemenmt;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,13 +21,8 @@ import android.widget.Toast;
 
 import com.technobrix.tbx.safedoors.AllApiInterface;
 import com.technobrix.tbx.safedoors.Create_MeetingPOJO.CreateBean;
-import com.technobrix.tbx.safedoors.LoginPOJO.LoginBean;
-import com.technobrix.tbx.safedoors.MainActivity;
-import com.technobrix.tbx.safedoors.MeetingPOJO.MeetingBean;
 import com.technobrix.tbx.safedoors.R;
 import com.technobrix.tbx.safedoors.bean;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,18 +82,18 @@ public class Meeting extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-
                         String day = String.valueOf(picker.getDayOfMonth());
                         String month = String.valueOf(picker.getMonth() + 1);
                         String year = String.valueOf(picker.getYear());
 
-                        time1.setText(day + "-" + month + "-" + year);
+                        date = year + "-" + month + "-" + day;
+
+                        time1.setText(year + "-" + month + "-" + day);
 
                         dialog.dismiss();
 
                     }
                 });
-
 
             }
         });
@@ -124,6 +117,8 @@ public class Meeting extends Fragment {
 
                         String hour = String.valueOf(picker.getCurrentHour());
                         String minute = String.valueOf(picker.getCurrentMinute());
+
+                        starttime = hour + " : " + minute;
 
                         time2.setText(hour + " : " + minute);
                         dialog.dismiss();
@@ -161,13 +156,11 @@ public class Meeting extends Fragment {
 
                     }
                     });
-
-
-
                     }
         });
 
         submit.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
@@ -185,7 +178,15 @@ public class Meeting extends Fragment {
                         .build();
 
                 AllApiInterface cr = retrofit.create(AllApiInterface.class);
-                Call<CreateBean> call = cr.creat(b.socity_id , b.userId ,date , starttime , t  , des);
+                Call<CreateBean> call = cr.creat(b.socity , b.userId ,date , starttime , t  , des);
+
+                Log.d("hdfshg" , b.socity);
+                Log.d("hdfshg" , b.userId);
+                Log.d("hdfshg" , date);
+                Log.d("hdfshg" , starttime);
+                Log.d("hdfshg" , t);
+                Log.d("hdfshg" , des);
+
                 call.enqueue(new Callback<CreateBean>() {
                     @Override
                     public void onResponse(Call<CreateBean> call, Response<CreateBean> response) {

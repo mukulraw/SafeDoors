@@ -1,7 +1,7 @@
 package com.technobrix.tbx.safedoors.Inventory_List;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +56,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name , one , price;
+        TextView name , one , price , qty;
 
 
         public MyViewHolder(View itemView) {
@@ -65,6 +65,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.MyVi
             name = (TextView)itemView.findViewById(R.id.name);
             one = (TextView)itemView.findViewById(R.id.one);
             price = (TextView)itemView.findViewById(R.id.price);
+            qty = (TextView)itemView.findViewById(R.id.quantity);
         }
     }
 }

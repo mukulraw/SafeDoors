@@ -2,24 +2,24 @@ package com.technobrix.tbx.safedoors.Inventory_List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.technobrix.tbx.safedoors.AllApiInterface;
-import com.technobrix.tbx.safedoors.FacilityPOJO.Bean;
+import com.technobrix.tbx.safedoors.InventoryPhonePOJO.InventoryPhoneBean;
 import com.technobrix.tbx.safedoors.InventryListPOJO.InventoryBean;
 import com.technobrix.tbx.safedoors.InventryListPOJO.InventryList;
-import com.technobrix.tbx.safedoors.LoginPOJO.LoginBean;
 import com.technobrix.tbx.safedoors.R;
 import com.technobrix.tbx.safedoors.bean;
 
@@ -42,22 +42,88 @@ public class Inventory extends Fragment {
     InventoryAdapter adapter;
     ProgressBar bar;
     List<InventryList>list;
+    FloatingActionButton phone;
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.inventory_items , container , false);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.inventory);
+
+        phone = (FloatingActionButton) view.findViewById(R.id.phone);
+
         bar = (ProgressBar) view.findViewById(R.id.progress);
 
         list = new ArrayList<>();
 
         adapter = new InventoryAdapter(getContext() , list);
+
         manager = new GridLayoutManager(getContext(),1);
+
         recyclerView.setLayoutManager(manager);
+
         recyclerView.setAdapter(adapter);
 
-        bar.setVisibility(View.VISIBLE);
+
+
+
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+               /* Intent intent = new Intent(Intent.ACTION_DIAL);
+
+                intent.setData(Uri.parse("tel:" + ));
+
+                startActivity(intent);*/
+
+                bar.setVisibility(View.VISIBLE);
+
+                bean b = (bean)getContext().getApplicationContext();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://safedoors.in")
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                AllApiInterface cr = retrofit.create(AllApiInterface.class);
+                Call<InventoryPhoneBean> call = cr.inventoryphone(b.socity_id);
+                call.enqueue(new Callback<InventoryPhoneBean>() {
+                    @Override
+                    public void onResponse(Call<InventoryPhoneBean> call, Response<InventoryPhoneBean> response) {
+
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+
+                        intent.setData(Uri.parse("tel:"));
+
+                        startActivity(intent);
+
+                   bar.setVisibility(View.GONE);
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<InventoryPhoneBean> call, Throwable t) {
+
+
+                        bar.setVisibility(View.GONE);
+
+                    }
+                });
+
+
+
+
+
+
+            }
+        });
 
         Log.d("kdsg" , "hii");
 
@@ -126,6 +192,8 @@ public class Inventory extends Fragment {
             holder.name.setText(item.getName());
             holder.one.setText(String.valueOf(position + 1));
             holder.price.setText("Rs." + item.getPricePer());
+            holder.qty.setText(item.getQty());
+
 
         }
 
@@ -142,7 +210,7 @@ public class Inventory extends Fragment {
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            TextView name , one , price;
+            TextView name , one , price , qty;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -150,6 +218,7 @@ public class Inventory extends Fragment {
                 name = (TextView)itemView.findViewById(R.id.name);
                 one = (TextView)itemView.findViewById(R.id.one);
                 price = (TextView)itemView.findViewById(R.id.price);
+                qty = (TextView)itemView.findViewById(R.id.quantity);
             }
         }
     }

@@ -11,9 +11,12 @@ public class NoticeList {
     @SerializedName("date")
     @Expose
     private String date;
-    @SerializedName("notice")
+    @SerializedName("title")
     @Expose
-    private String notice;
+    private String title;
+    @SerializedName("description")
+    @Expose
+    private String description;
 
     public String getId() {
         return id;
@@ -31,12 +34,20 @@ public class NoticeList {
         this.date = date;
     }
 
-    public String getNotice() {
-        return notice;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNotice(String notice) {
-        this.notice = notice;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

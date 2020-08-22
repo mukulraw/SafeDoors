@@ -19,5 +19,4 @@ public class EventBean {
     public void setMeetingList(List<MeetingList> meetingList) {
         this.meetingList = meetingList;
     }
-
 }

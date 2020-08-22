@@ -1,11 +1,10 @@
 package com.technobrix.tbx.safedoors.NoticeBoard;
 
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.technobrix.tbx.safedoors.AllApiInterface;
-import com.technobrix.tbx.safedoors.LoginPOJO.LoginBean;
 import com.technobrix.tbx.safedoors.NoticeListPOJO.NoticeBean;
 import com.technobrix.tbx.safedoors.NoticeListPOJO.NoticeList;
 import com.technobrix.tbx.safedoors.R;
 import com.technobrix.tbx.safedoors.bean;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,28 +30,35 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class NoticeBoard1 extends Fragment {
+
     RecyclerView recyclerView;
+
     GridLayoutManager manager;
+
     NoticeAdapter adapter;
-List<NoticeList> list;
+
+    List<NoticeList> list;
 
     ProgressBar bar;
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.notice_board,container,false);
+
         recyclerView  = (RecyclerView)view.findViewById(R.id.recycler);
+
         bar = (ProgressBar)view.findViewById(R.id.bar);
+
+        manager = new GridLayoutManager(getContext(),1);
 
         list = new ArrayList<>();
 
-        manager = new GridLayoutManager(getContext(),1);
         adapter = new NoticeAdapter(getContext() , list);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(manager);
 
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setLayoutManager(manager);
 
 
         Calendar cc = Calendar.getInstance();
@@ -79,7 +82,9 @@ List<NoticeList> list;
 
         bean b = (bean)getContext().getApplicationContext();
 
-        Call<NoticeBean> call = cr.getNoticeList(b.socity , date);
+        Call<NoticeBean> call = cr.notice(b.socity , date);
+
+        Log.d("jai ho" , b.socity);
 
         call.enqueue(new Callback<NoticeBean>() {
             @Override
@@ -87,12 +92,15 @@ List<NoticeList> list;
 
                 adapter.setGridData(response.body().getNoticeList());
 
+                Log.d("jai" , "response ");
                 bar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<NoticeBean> call, Throwable t) {
                 bar.setVisibility(View.GONE);
+
+                Log.d("bdf" , t.toString());
             }
         });
 

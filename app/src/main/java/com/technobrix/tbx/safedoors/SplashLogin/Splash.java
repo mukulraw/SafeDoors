@@ -1,18 +1,25 @@
 package com.technobrix.tbx.safedoors.SplashLogin;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.technobrix.tbx.safedoors.AllApiInterface;
-import com.technobrix.tbx.safedoors.GateKeeper;
 import com.technobrix.tbx.safedoors.LoginPOJO.LoginBean;
 import com.technobrix.tbx.safedoors.MainActivity;
+import com.technobrix.tbx.safedoors.NewGatekeeper.GateHome;
 import com.technobrix.tbx.safedoors.R;
 import com.technobrix.tbx.safedoors.bean;
 
@@ -28,9 +35,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Splash extends AppCompatActivity {
+
     Timer time;
 
     SharedPreferences pref;
+
+    String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA};
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     ProgressBar bar;
 
@@ -39,11 +50,79 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(Splash.this));
+
         pref  = getSharedPreferences("pref" , Context.MODE_PRIVATE);
 
         bar = (ProgressBar) findViewById(R.id.progress);
 
 
+
+
+        if(hasPermissions(this , PERMISSIONS))
+        {
+            startApp();
+        }
+        else
+        {
+            ActivityCompat.requestPermissions(this , PERMISSIONS , REQUEST_CODE_ASK_PERMISSIONS);
+        }
+
+
+
+
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CODE_ASK_PERMISSIONS)
+        {
+            if (ActivityCompat.checkSelfPermission(getApplicationContext() , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            {
+
+                startApp();
+
+            }
+            else
+            {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this , Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                    Toast.makeText(getApplicationContext() , "Permissions are required for this app" , Toast.LENGTH_SHORT).show();
+                    finish();
+
+                }
+                //permission is denied (and never ask again is  checked)
+                //shouldShowRequestPermissionRationale will return false
+                else {
+                    Toast.makeText(this, "Go to settings and enable permissions", Toast.LENGTH_LONG)
+                            .show();
+                    finish();
+                    //                            //proceed with logic by disabling the related features or quit the app.
+                }
+            }
+
+        }
+
+
+    }
+
+
+    public void startApp()
+    {
         String email = pref.getString("email" , "");
         String pass = pref.getString("pass" , "");
 
@@ -77,11 +156,14 @@ public class Splash extends AppCompatActivity {
 
                             b.userId = response.body().getUserid();
 
-                            b.name = response.body().getSocityName();
+                            b.name = response.body().getUsername();
+                            b.flat = response.body().getHouseNo();
 
                             b.socity = response.body().getSocityId();
 
-                            b.house_id = response.body().getHouseNo();
+                            b.house_id = response.body().getHouseId();
+
+                            b.member_id = response.body().getUserid();
 
 
 
@@ -97,10 +179,11 @@ public class Splash extends AppCompatActivity {
                         {
                             bean b = (bean)getApplicationContext();
                             b.userId = response.body().getUserid();
-                            b.name = response.body().getSocityName();
+                            b.flat = response.body().getHouseNo();
+                            b.name = response.body().getUsername();
                             b.socity = response.body().getSocityId();
                             Toast.makeText(Splash.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(Splash.this, GateKeeper.class);
+                            Intent i = new Intent(Splash.this, GateHome.class);
                             bar.setVisibility(View.GONE);
                             startActivity(i);
                             finish();
@@ -118,7 +201,6 @@ public class Splash extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<LoginBean> call, Throwable t) {
                     bar.setVisibility(View.GONE);
-
 
                 }
             });
@@ -139,11 +221,6 @@ public class Splash extends AppCompatActivity {
             } , 1500);
 
         }
-
-
-
-
-
-
     }
+
 }

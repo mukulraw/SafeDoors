@@ -1,16 +1,19 @@
 package com.technobrix.tbx.safedoors.Event;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,20 +24,20 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import com.technobrix.tbx.safedoors.AllApiInterface;
+import com.technobrix.tbx.safedoors.BuyTicket;
+import com.technobrix.tbx.safedoors.EventBookPOJO.EventBookBean;
 import com.technobrix.tbx.safedoors.EventDatePOJO.EventBean;
 import com.technobrix.tbx.safedoors.EventDatePOJO.MeetingList;
-import com.technobrix.tbx.safedoors.FacilityPOJO.Bean;
-import com.technobrix.tbx.safedoors.MeetingPOJO.MeetingBean;
+import com.technobrix.tbx.safedoors.GetEventListPOJO.GetEventListBean;
 import com.technobrix.tbx.safedoors.R;
 import com.technobrix.tbx.safedoors.bean;
-import com.technobrix.tbx.safedoors.meetingDetailBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,8 +48,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class Calender extends Fragment {
-
-
 
     MaterialCalendarView calendarView;
     ProgressBar progress;
@@ -112,7 +113,7 @@ public class Calender extends Fragment {
 
                 AllApiInterface cr = retrofit.create(AllApiInterface.class);
 
-                Call<EventBean> call = cr.event("1" ,dat);
+                Call<EventBean> call = cr.event(b.socity ,dat , b.userId);
 
                 Log.d ("nkdf" , dat);
 
@@ -183,16 +184,16 @@ public class Calender extends Fragment {
 
         bean b = (bean)getContext().getApplicationContext();
 
-        Call<MeetingBean> call = cr.getMeetings(b.socity);
+        Call<GetEventListBean> call = cr.getevent(b.socity , b.userId);
 
-        call.enqueue(new Callback<MeetingBean>() {
+        call.enqueue(new Callback<GetEventListBean>() {
             @Override
-            public void onResponse(Call<MeetingBean> call, Response<MeetingBean> response) {
+            public void onResponse(Call<GetEventListBean> call, Response<GetEventListBean> response) {
 
+
+                Log.d("fjgbdfj" , "responflk");
                 for (int i = 0 ; i < response.body().getMeetingList().size() ; i++)
                 {
-
-
 
                     socIds.add(response.body().getMeetingList().get(i).getId());
 
@@ -219,13 +220,16 @@ public class Calender extends Fragment {
 
                 progress.setVisibility(View.GONE);
 
-                calendarView.addDecorators(new EventDecorator(Color.GREEN, cl));
+                calendarView.addDecorators(new EventDecorator(Color.RED, cl));
 
             }
 
             @Override
-            public void onFailure(Call<MeetingBean> call, Throwable t) {
+            public void onFailure(Call<GetEventListBean> call, Throwable t) {
+
                 progress.setVisibility(View.GONE);
+
+                Log.d("ghfdghfd" , t.toString());
             }
         });
 
@@ -253,5 +257,140 @@ public class Calender extends Fragment {
             view.addSpan(new DotSpan(15, color));
         }
     }
+
+
+
+    public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
+
+
+        Context context;
+
+        List<MeetingList> list = new ArrayList<>();
+
+        public EventAdapter(Context context ,  List<MeetingList> list){
+
+            this.context = context;
+
+            this .list = list;
+        }
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View view = LayoutInflater.from(context).inflate(R.layout.event_list_model , parent , false);
+            return new MyViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+
+
+            final MeetingList item = list.get(position);
+
+            String daa = item.getMeetingDate();
+            String[] d1 = daa.split("-");
+
+            holder.d.setText(d1[2]);
+            holder. m.setText(d1[1] + " " + d1[0]);
+
+            holder. title.setText(item.getTitle());
+            holder.desc.setText(item.getDescription());
+            holder.time.setText(item.getMeetingTime());
+
+
+           Log.d("jkdfg" , item.getEventType());
+
+            if (Objects.equals(item.getEventType(), "unpaid"))
+            {
+                holder.paid.setText("FREE");
+                holder.buyticket.setVisibility(View.GONE);
+            }
+            else
+            {
+                holder.paid.setText("INR " + item.getEventPrice());
+                holder.buyticket.setVisibility(View.VISIBLE);
+            }
+
+
+
+
+            holder.buyticket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    progress.setVisibility(View.VISIBLE);
+
+                    bean b = (bean)context.getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("http://safedoors.in")
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiInterface cr = retrofit.create(AllApiInterface.class);
+
+                    Call<EventBookBean> call = cr.eventbook(b.socity , b.house_id , b.userId , item.getId() , item.getEventPrice());
+
+                    call.enqueue(new Callback<EventBookBean>() {
+                        @Override
+                        public void onResponse(Call<EventBookBean> call, Response<EventBookBean> response) {
+
+                            Intent i = new Intent(context , BuyTicket.class);
+                            i.putExtra("title" , item.getTitle());
+                            context.startActivity(i);
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<EventBookBean> call, Throwable t) {
+
+                            progress.setVisibility(View.GONE);
+
+
+                        }
+                    });
+
+
+                }
+            });
+
+        }
+
+        public void Setgrid(List<MeetingList> list){
+
+            this.list = list;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getItemCount()  {
+            return list.size();
+        }
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+
+            TextView d , m , title , desc , time;
+
+            Button paid , buyticket;
+
+            public MyViewHolder(View itemView) {
+                super(itemView);
+
+                d = (TextView)itemView.findViewById(R.id.day);
+                m = (TextView)itemView.findViewById(R.id.month);
+                title = (TextView)itemView.findViewById(R.id.title);
+                time = (TextView)itemView.findViewById(R.id.time);
+                desc = (TextView)itemView.findViewById(R.id.description);
+
+                paid = (Button)itemView.findViewById(R.id.paid);
+                buyticket = (Button)itemView.findViewById(R.id.butticket);
+
+            }
+        }
+    }
+
+
+
 
 }
